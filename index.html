@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Ventas | Urbanización Aurora</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-aurora: #3498db;
+            --gris-texto: #7f8c8d;
+            --rojo-aurora: #e74c3c;
+            --fondo-gris: #f0f2f5;
+            --blanco: #ffffff;
+            --negro-suave: #2c3e50;
+            --whatsapp-green: #25d366;
+        }
+        header {
+            background: var(--blanco);
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 100;
+                }
+
+            .header-container {
+                display: flex;
+                justify-content: space-between; /* Centra todo el grupo */
+                align-items: center;     /* Alinea los GIFs a la altura del logo */
+                padding: 10px 40px;
+                width: 60%;
+            }
+
+                .gif-header {
+                    height: 80px;            /* Ajusta esta altura para que queden bien con tu logo */
+                    width: auto;
+                }
+
+                .encabezado-img {
+                    max-width: 500px;        /* Ajusta el tamaño de tu logo si es necesario */
+                    height: auto;
+                }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--fondo-gris); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+
+        header { background: var(--blanco); width: 100%; display: flex; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); z-index: 100; }
+        .encabezado-img { max-width: 100%; height: auto; display: block; }
+
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+
+        aside { width: 270px; background: var(--negro-suave); color: var(--blanco); padding-top: 30px; display: flex; flex-direction: column; }
+        .menu-item { padding: 18px 25px; cursor: pointer; transition: 0.3s; border-left: 6px solid transparent; color: #bdc3c7; }
+        .menu-item:hover { background: #34495e; color: var(--blanco); }
+        .menu-item.active { background: rgba(52, 152, 219, 0.15); border-left: 6px solid var(--azul-aurora); color: var(--blanco); font-weight: 600; }
+
+        main { flex: 1; overflow-y: auto; background: var(--blanco); padding-bottom: 50px; }
+        .content-section { display: none; animation: fadeIn 0.4s ease-out; }
+        .content-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .page-header { margin: 40px 45px 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .page-header h2 { font-size: 2rem; color: var(--negro-suave); font-weight: 700; }
+
+        .card-info {
+            background: var(--blanco);
+            padding: 30px;
+            margin: 0 45px 25px;
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+            border-left: 8px solid var(--azul-aurora);
+        }
+
+        .border-rojo { border-left-color: var(--rojo-aurora) !important; }
+        .border-gris { border-left-color: var(--gris-texto) !important; }
+
+        /* --- ESTILOS DE TESTIMONIOS (CLIENTES) --- */
+        .testimonio-item {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+        .foto-cliente {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+        .quote { font-style: italic; color: var(--azul-aurora); font-weight: 600; margin-bottom: 10px; display: block; }
+        .nombre-cliente { display: block; margin-top: 15px; font-weight: 700; color: var(--negro-suave); text-align: right; }
+
+        /* --- ESTILOS DEL CARRUSEL --- */
+        .slider-container { position: relative; margin: 20px 45px; overflow: hidden; border-radius: 12px; }
+        .slider-track { display: flex; transition: transform 0.5s ease-in-out; gap: 15px; }
+        .foto-mosaico { min-width: calc(25% - 12px); height: 180px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 10px; cursor: pointer; z-index: 10; border-radius: 5px; }
+        .prev { left: 5px; }
+        .next { right: 5px; }
+
+        /* OTROS */
+        .contenedor-video { display: flex; justify-content: center; width: 100%; margin-top: 20px; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-top: 10px; }
+        .btn-enviar { background: var(--whatsapp-green); color: white; border: none; padding: 16px; font-weight: 700; width: 100%; cursor: pointer; border-radius: 8px; margin-top: 15px; }
+        .btn-flotante { position: fixed; bottom: 30px; right: 30px; background-color: var(--whatsapp-green); width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1000; }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <img src="Imagenes/Mapa.gif" class="gif-header">
+        <img src="Imagenes/LogoAurora.jpg" alt="Encabezado Aurora" class="encabezado-img">
+        <img src="Imagenes/WhatsApp.gif" class="gif-header">
+    </div>
+</header>
+
+<div class="main-container">
+    <aside>
+        <div class="menu-item active" onclick="showPage('home', this)">🏠 HOME</div>
+        <div class="menu-item" onclick="showPage('nosotros', this)">👥 NOSOTROS</div>
+        <div class="menu-item" onclick="showPage('creditos', this)">💳 CRÉDITOS</div>
+        <div class="menu-item" onclick="showPage('requisitos', this)">📋 REQUISITOS</div>
+        <div class="menu-item" onclick="showPage('clientes', this)">🌟 CLIENTES</div>
+        <div class="menu-item" onclick="showPage('contacto', this)">📞 CONTACTO</div>
+    </aside>
+
+    <main id="content-area">
+        <section id="home" class="content-section active">
+            <div class="page-header"><h2>Terrenos en Chimoré</h2></div>
+            <div class="slider-container" onmouseenter="stopAuto()" onmouseleave="startAuto()">
+                <button class="slider-btn prev" onclick="moveSlider(-1)">❮</button>
+                <div class="slider-track" id="sliderTrack">
+                    <img src="Imagenes/Terreno1.jpg" class="foto-mosaico">
+                    <img src="Imagenes/Terreno2.jpg" class="foto-mosaico">
+                    <img src="Imagenes/Terreno3.jpg" class="foto-mosaico">
+                    <img src="Imagenes/Terreno4.jpg" class="foto-mosaico">
+                    <img src="Imagenes/Terreno5.jpg" class="foto-mosaico">
+                    <img src="Imagenes/Terreno6.jpg" class="foto-mosaico">
+                    <img src="Imagenes/Terreno7.jpg" class="foto-mosaico">
+                    <img src="Imagenes/Terreno8.jpg" class="foto-mosaico">
+                </div>
+                <button class="slider-btn next" onclick="moveSlider(1)">❯</button>
+            </div>
+            <div class="card-info" style="text-align: center; border-left: none;">
+                <h1 style="color: var(--azul-aurora); font-size: 2.5rem;">OFERTA LIMITADA</h1>
+                <p>Imagina despertar con el canto de las aves y el aire puro que solo un lugar como Chimoré puede ofrecer. En Urbanización Aurora no solo vendemos terrenos, te ofrecemos la llave para empezar un nuevo capítulo en tu vida. Ubicados en la zona de mayor crecimiento del municipio de Carrasco, ponemos a tu disposición terrenos con características únicas, ideales para construir la casa de tus sueños, un espacio de descanso o una inversión segura a futuro. Con nuestros planes de crédito directo, hemos eliminado los trámites bancarios complicados para que el proceso sea tan sencillo como imaginar tu vida aquí. Urbanización Aurora es más que un terreno, es tu lugar en el mundo. Asegura tu lote en Chimoré con crédito directo y las mejores facilidades del mercado.</p>
+            </div>
+            <div class="contenedor-video">
+                <video width="640" height="360" autoplay controls>
+                    <source src="Imagenes/SPOT_AURORA.mp4" type="video/mp4">
+                </video>
+            </div>
+        </section>
+
+        <section id="nosotros" class="content-section">
+            <div class="page-header"><h2>Nuestra Empresa</h2></div>
+            <div class="card-info">
+                <p>Somos una organización consolidada en el Trópico de Cochabamba, dedicada a la urbanización y venta de terrenos con seguridad jurídica plena. Nos enfocamos en la transparencia y el desarrollo sostenible en la Provincia Carrasco. Urbanización Aurora es el resultado de años de experiencia en el sector inmobiliario y un profundo conocimiento del Valle de Chimoré. Nos especializamos en la venta de terrenos con un enfoque claro: ofrecer seguridad jurídica, ubicaciones privilegiadas y las mejores facilidades de pago del mercado. Al elegirnos, no solo adquieres un terreno, sino la certeza de estar respaldado por una empresa seria, transparente y con visión de futuro.</p>
+            </div>
+            <div class="card-info border-gris">
+                <p>Nuestro equipo está formado por profesionales del urbanismo, la topografía y el asesoramiento financiero, trabajando juntos para garantizar que cada lote que comercializamos cumpla con los más altos estándares de calidad y proyección de plusvalía. Trabajamos incansablemente para ser el socio estratégico que necesitas para construir tu patrimonio en una de las zonas de mayor crecimiento del Trópico Cochabambino. Nuestra trayectoria garantiza que cada lote entregado cuente con el respaldo jurídico necesario para la tranquilidad de su familia.</p>
+            </div>
+        </section>
+
+        <section id="creditos" class="content-section">
+            <div class="page-header"><h2>Financiamiento Directo</h2></div>
+            <div class="card-info border-rojo">
+                <h3>Venta a sola firma</h3>
+                <p>Olvídate de los bancos. Nosotros somos tu financiamiento directo. Sin garantes, sin trámites burocráticos y con posesión inmediata tras el pago de la inicial. Somos un equipo apasionado por Chimoré y comprometido con hacer realidad el sueño de la casa propia. En Urbanización Aurora nos dedicamos a la venta de terrenos con crédito directo, porque creemos que las facilidades de pago no deberían ser un obstáculo, sino el primer paso hacia tu patrimonio.</p>
+            </div>
+            <div class="card-info">
+                <p>Con nosotros, encontrarás transparencia, asesoramiento personalizado y el respaldo de un proyecto pensado para crecer junto a ti. Bienvenido a tu nuevo hogar. Te ofrecemos financiamiento directo con la empresa, sin intermediarios bancarios ni revisiones de historial crediticio complicadas.</p>
+            </div>
+        </section>
+
+        <section id="requisitos" class="content-section">
+            <div class="page-header"><h2>Requisitos</h2></div>
+            <div class="card-info">
+                <h3 style="color: var(--azul-aurora);">1. Cuota Inicial Mínima</h3>
+                <p>En la Urbanización Aurora te ofrecemos la mejor oferta para adquirir tu terreno sin trámites largos ni esperas interminables. Olvídate de las filas en los bancos, los papeleos complicados y los intereses que nunca terminan de pagarse. Aquí todo es directo, claro y pensado para ti: tú eliges el plazo, tú pones el pie y nosotros te acompañamos en cada paso. Porque creemos que tener un terreno propio no debería ser un dolor de cabeza, sino la alegría más grande de tu vida. Con nuestro sistema de crédito directo, tú decides cómo pagar:</p>
+                <p>* Cuota Inicial acequible a tu bolsillo.</p>
+                <p>* Cuotas fijas sin intereses.</p>
+                <p>* Plazos de hasta 30 meses para que tu bolsillo respire.</p>
+                <p>* Sin avales bancarios ni revisiones de buró de crédito.</p>
+                <p>* Llegaste, viste el terreno, te enamoraste y en minutos separas tu lote.</p>
+            </div>
+            <div class="card-info">
+                <h3 style="color: var(--azul-aurora);">2. Solo Carnet de Identidad</h3>
+                <p>No pedimos papeleos infinitos. Solo necesitamos tu C.I. vigente original y una fotocopia.</p>
+                <p>"Hoy puedes dar el primer paso. El terreno de tus sueños ya tiene tu nombre, solo falta que vengas a conocerlo."</p>
+                <p>Una pequeña Cuota inicial que te permite reservar el lote de tu preferencia de manera inmediata.</p>
+            </div>
+        </section>
+
+        <section id="clientes" class="content-section">
+            <div class="page-header"><h2>Clientes Satisfechos</h2></div>
+            
+            <div class="card-info">
+                <div class="testimonio-item">
+                    <img src="Imagenes/Familia.jpg" class="foto-cliente">
+                    <div>
+                        <h3>La Familia que Construyó su Hogar</h3>
+                        <span class="quote">"Gracias a Urbanización Aurora, hoy tenemos un lugar al fin llamamos hogar"</span>
+                        <p>Después de años de alquilar y soñar con tener algo propio, encontramos en Urbanización Aurora mucho más que un terreno: encontramos la oportunidad que estábamos esperando. El proceso fue tan sencillo que no lo podíamos creer. Nos explicaron cada detalle, nos mostraron el terreno con total transparencia y nos ofrecieron un plan de pagos que se ajustaba justo a nuestro presupuesto. Hoy, nuestros hijos ya corren por el terreno mientras imaginamos dónde pondremos cada habitación. ¡Gracias, Urbanización Aurora, por hacer nuestro sueño realidad!</p>
+                        <span class="nombre-cliente">Familia Rodríguez, Cochabamba</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-info border-gris">
+                <div class="testimonio-item">
+                    <img src="Imagenes/Ingeniero.jpg" class="foto-cliente">
+                    <div>
+                        <h3>El Inversor que Vio el Potencial</h3>
+                        <span class="quote">"Invertir en Chimoré fue la mejor decisión, y hacerlo con Aurora me dio la tranquilidad que necesitaba"</span>
+                        <p>Conozco bien el Valle de Chimoré y sé el potencial de crecimiento que tiene. Cuando decidí invertir, busqué un proyecto serio y con respaldo. En Urbanización Aurora encontré exactamente eso: Profesionales que conocen la zona, que te asesoran con honestidad y que cumplen lo que prometen. Compré dos lotes como inversión a futuro y ya estoy viendo cómo aumenta su valor. Además, el crédito directo me permitió diversificar mi dinero sin tener que desembolsar todo de una vez. Sin duda, volvería a comprar con ellos.</p>
+                        <span class="nombre-cliente">Ing. Mario Sanchez, Santa Cruz de la Sierra</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-info border-rojo">
+                <div class="testimonio-item">
+                    <img src="Imagenes/Pareja.jpg" class="foto-cliente">
+                    <div>
+                        <span class="quote">"Queríamos un lugar para desconectar del ruido de la ciudad y lo encontramos en Aurora"</span>
+                        <p>Vivimos en La Paz y el ritmo de vida a veces nos agobia. Soñábamos con tener un espacio propio en un lugar tranquilo, donde pudiéramos ir los fines de semana y, más adelante, construir nuestra casa de descanso. Un amigo nos recomendó Urbanización Aurora y desde la primera visita nos enamoramos. La ubicación es privilegiada, el entorno es hermoso y la gente del proyecto nos trató con mucho cariño. El crédito directo nos facilitó muchísimo las cosas, sin los requisitos imposibles de los bancos. Hoy ya tenemos nuestro terrenito y estamos diseñando la casita. ¡Gracias por hacerlo posible!</p>
+                        <span class="nombre-cliente">Carlos y Laura</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" class="content-section">
+            <div class="page-header"><h2>Contáctanos</h2></div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 0 45px;">
+                <div class="card-info" style="margin:0;">
+                    <form id="formVentas">
+                        <input type="text" id="nombreCliente" placeholder="Nombre completo" required>
+                        <textarea id="consultaCliente" rows="4" placeholder="¿En qué estás interesado?"></textarea>
+                        <button type="submit" class="btn-enviar">ENVIAR A WHATSAPP</button>
+                    </form>
+                </div>
+                <div class="mapa-contenedor">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3810.000000000000!2d-65.1500000!3d-16.9800000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTbCsDU4JzQ4LjAiUyA2NcKwMDknMDAuMCJX!5e0!3m2!1ses!2sbo!4v1620000000000!5m2!1ses!2sbo" 
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<a href="https://wa.me/59173814854" class="btn-flotante" target="_blank">
+    <svg viewBox="0 0 24 24" style="width: 32px; fill: white;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<script>
+    let currentIdx = 0;
+    let timer;
+
+    function showPage(pageId, element) {
+        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+        if(element) element.classList.add('active');
+        document.getElementById('content-area').scrollTop = 0;
+    }
+
+    function moveSlider(step) {
+        const track = document.getElementById('sliderTrack');
+        if(!track) return;
+        const total = track.querySelectorAll('img').length;
+        const visible = 4;
+        const max = total - visible;
+        currentIdx += step;
+        if (currentIdx > max) currentIdx = 0;
+        if (currentIdx < 0) currentIdx = max;
+        track.style.transform = `translateX(-${currentIdx * (100 / visible)}%)`;
+    }
+
+    function startAuto() { timer = setInterval(() => moveSlider(1), 3000); }
+    function stopAuto() { clearInterval(timer); }
+    window.onload = startAuto;
+
+    document.getElementById('formVentas').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const nombre = document.getElementById('nombreCliente').value;
+        const consulta = document.getElementById('consultaCliente').value;
+        const mensaje = `Hola Urbanización Aurora, soy ${nombre}. Consulta: ${consulta}`;
+        window.open(`https://wa.me/59167456398?text=${encodeURIComponent(mensaje)}`, '_blank');
+    });
+</script>
+
+</body>
+</html>
